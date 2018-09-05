@@ -20,20 +20,29 @@ public class Family {
     }
 
 
-    public boolean add(String name){
-
-        return true;
-    }
 
 
+public boolean add(String name){
 
+        if(!family.containsKey(name)){
+            FamilyMember familyMember = new FamilyMember(name);
+
+            family.put(name,familyMember);
+            return true;
+        }
+
+        return false;
+
+
+}
     public boolean add(String name, String gender){
-if(family.containsKey(name) && gender==""){
-    return false;
-} else if(family.containsKey(name) && gender!="") {
-    if(family.get(name).isGenderSet()){
+
+if(family.containsKey(name)) {
+    if(family.get(name).isGenderSet()==false){
+
 
         family.get(name).setGender(gender);
+        return true;
     }else{
 
         return false;
@@ -44,8 +53,10 @@ if(family.containsKey(name) && gender==""){
     FamilyMember familyMember = new FamilyMember(name,gender);
 
     family.put(name,familyMember);
+
+    return true;
 }
-        return true;
+       return false;
     }
 public boolean isGender(String name,String gender){
 
@@ -71,7 +82,7 @@ public boolean male(String name){
 
 
 public boolean female(String name){
-    return add(name, "male");
+    return add(name, "female");
 
 }
 
@@ -81,7 +92,7 @@ public boolean setParent(String childName, String parentName){
         FamilyMember child = getMember(childName);
     FamilyMember parent = getMember(parentName);
     FamilyMember[] parents = child.getParents();
-    if((parent.getGender()=="male") && (parents[0]!=null)){
+    if((parent.getGender()=="male") && (parents[0]==null)){
 
 
 
@@ -89,20 +100,20 @@ public boolean setParent(String childName, String parentName){
 
         if(parents[1]!=null){
 
-            if(!parents[1].isGenderSet()){
+            if(parents[1].isGenderSet()==false){
 
                 parents[1].setGender("female");
             }
 
         }
         return true;
-    } else if((parent.getGender()=="female") && (parents[1]!=null)){
+    } else if((parent.getGender()=="female") && (parents[1]==null)){
 
         child.setParent(parent,1);
 
         if(parents[0]!=null){
 
-            if(!parents[0].isGenderSet()){
+            if(parents[0].isGenderSet()==false){
 
                 parents[0].setGender("male");
             }
